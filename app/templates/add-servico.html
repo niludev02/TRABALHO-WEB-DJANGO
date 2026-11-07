@@ -1,0 +1,15 @@
+{% extends 'template.html' %}
+
+{% block titulo %} Novo Serviço {% endblock %}
+
+{% block conteudo %}
+
+    <h2> Novo Serviço </h2>
+
+    <form action="{% url 'addServico' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Cadastrar">
+    </form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'template.html' %}
+
+{% block titulo %} Dashboard {% endblock %}
+
+{% block conteudo %}
+
+    <h2>Dashboard </h2>
+    <p>Olá, <strong>{{ user.first_name }}</strong>!</p>
+
+    <p><a href="{% url 'perfil' %}">Meu Perfil</a></p>
+
+    <form action="{% url 'logout' %}" method="get">
+        {% csrf_token %}
+        <input type="submit" value="Sair">
+    </form> 
+
+{% endblock %}

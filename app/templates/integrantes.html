@@ -1,0 +1,39 @@
+{% extends 'template.html' %}
+
+{% block titulo %} Home {% endblock %}
+
+{% block conteudo %}
+    <section id="integrantes">
+        <div>
+            <h2>Integrantes</h2>  
+            <p id="button"><a href="{% url 'addIntegrante' %}">+ Integrante</a></p>
+        </div>
+        <ul>
+        {% for integrante in integrantes %}
+            <li>
+                <p>
+                    {% if integrante.foto_url %}
+                    <img src="{{ integrante.foto_url }}" alt="Foto de {{ integrante.nome }}" width="200" height="200">
+                    {% endif %}
+                </p>
+                <p>
+                    <br>
+                    {{ integrante.nome }} - {{ integrante.cargo }}
+                    <br><br>
+                    {{ integrante.biografia }}
+                    <br>
+                        <form action="{% url 'delIntegrante' integrante.id %} " method="POST">
+                            {% csrf_token %}
+                            <input type="submit" value="Excluir" onsubmit="return confirm('Deseja realmente excluir?')">
+                        </form>
+                    <hr>
+                </p>
+            </li>
+            {% empty %}
+            <li>
+                <p>Nenhum integrante cadastrado.</p>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

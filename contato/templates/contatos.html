@@ -1,0 +1,37 @@
+{% extends 'template.html' %}
+
+{% block titulo %} Contatos {% endblock %}
+
+{% block conteudo %}
+    <div>
+        <div>
+        <h2>Contatos</h2>  
+        
+        </div>
+        <div class="buttons">
+            <p id="button"><a href="{% url 'addContatos' %}">+ Contatos</a></p>
+        </div>
+    </div>    
+   
+    <table>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Mensagem</th>
+        <th colspan="2">Ações</th>
+
+        {% for con in contatos %}
+            <tr>
+                <td>{{ con.nome }}</td>
+                <td>{{ con.email }}</td>
+                <td>{{ con.telefone }}</td>
+                <td>{{ con.mensagem }}</td>
+                <td id="acoes-delete">
+                    <a href="{% url 'delServico' con.id %}"> Excluir </a>
+                </td>
+            <tr>
+        {% endfor %}
+    </table>
+
+    <br>
+{% endblock %}

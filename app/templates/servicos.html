@@ -1,0 +1,109 @@
+{% extends 'template.html' %}
+
+{% block titulo %} Serviços {% endblock %}
+
+{% block conteudo %}
+    <div>
+        <div>
+        <h2>Nossos Serviços</h2>  
+            {% if tem_servicos %}
+                <p>{{ total_servicos }} servico(s) encontrado(s).</p> 
+                {% if mais_barato %}
+                    <p> Menor preço: 
+                        {% if mais_barato.preco == 0.00 %}
+                            Grátis
+                        {% else %}
+                            R$ {{mais_barato.preco}} 
+                        {% endif %}
+                    </p>
+                {% endif%}
+                {% if mais_caro %}
+                    <p> Maior preço: R$ {{ mais_caro.preco}}</p>
+                {% endif%}
+            {% else %}
+                <p> Nenhum servico encontrado.</p> 
+            {% endif %}
+        </div>
+        <div class="buttons">
+            <p id="button"><a href="{% url 'addServico' %}">+ Serviços</a></p>
+            <form method="GET">
+                <input type="text" name="busca" placeholder="Digite o nome do Serviço" value="{{ busca|default:'' }}">
+                <button type="submit">Buscar</button>
+            </form>
+            {% for categoria_item in categorias %}
+                <a href="?categoria={{ categoria_item.id}}">
+                    <button>
+                        {{categoria_item.nome}}
+                    </button>
+                </a>
+            {% endfor %}
+            <a href="?preco=baixo">
+                <button>
+                    Até R$ 500
+                </button>
+            </a>
+
+            <a href="?preco=media">
+                <button>
+                    R$ 501 - R$ 1.500
+                </button>
+            </a>
+
+            <a href="?preco=alto">
+                <button>
+                    Acima de R$ 1.500
+                </button>
+            </a>
+            <a href="?ordem=menor">
+                <button>
+                    Menor preço
+                </button>
+            </a>
+            <a href="?ordem=maior">
+                <button>
+                    Maior preço
+                </button>
+            </a>
+            <a href="?ordem=nome">
+                <button>
+                    Ordem alfabética
+                </button>
+            </a>
+
+            <a href="{% url 'servicos' %}">
+                <button type="button">Limpar Filtros</button>
+            </a>
+        </div>
+    </div>    
+   
+    <table>
+        <th>Icon</th>
+        <th>Serviço</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th colspan="2">Ações</th>
+
+        {% for serv in servicos %}
+            <tr>
+                <td class="col-img"><img src="{{ serv.imagem.url }}" alt=""></td>
+                <td>{{ serv.nome }}</td>
+                <td>{{ serv.descricao}}</td>
+                <td>
+                    {% if serv.preco == 0.00 %}
+                        Grátis
+                    {% else %}
+                        R$ {{serv.preco}} 
+                    {% endif %}
+                </td>
+                <td id="acoes-editar">
+                    <a href="{% url 'editServico' serv.id %}"> Editar </a>
+                </td>
+                <td id="acoes-delete">
+                    <a href="{% url 'delServico' serv.id %}"> Excluir </a>
+                </td>
+            <tr>
+        {% endfor %}
+    </table>
+
+    <br>
+{% endblock %}

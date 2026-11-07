@@ -1,0 +1,22 @@
+{% extends 'template.html' %}
+
+{% block titulo %} Home {% endblock %}
+
+{% block conteudo %}
+    <div>
+        <h2>Produtos</h2>  
+        <p id="button"><a href="{% url 'contatos' %}">Adicionar produtos</a></p>
+    </div>    
+    <ul>
+    {% for prod in produtos %}
+        </li>
+            <div>
+                <img src="{{ prod.imagem.url }}" alt="">
+                {{ prod.nome }}
+                {{ prod.descricao}}
+                {{ prod.preco }}
+            </div> 
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
